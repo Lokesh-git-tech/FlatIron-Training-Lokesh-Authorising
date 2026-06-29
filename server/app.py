@@ -118,15 +118,9 @@ class MemberOnlyArticle(Resource):
         if not session.get('user_id'):
             return {"message": "Unauthorized"}, 401
 
-        article = Article.query.filter(
-            Article.id == id,
-            Article.is_member_only == True
-        ).first()
+        article = Article.query.filter(Article.id == id).first()
 
-        if article:
-            return ArticleSchema().dump(article), 200
-
-        return {}, 404
+        return ArticleSchema().dump(article), 200
 
 
 api.add_resource(ClearSession, '/clear', endpoint='clear')
